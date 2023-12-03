@@ -96,11 +96,21 @@ const GameController = (() => {
   const getWinner = () => winner
 
   const announceWinner = () => {
-    console.log(`${getWinner()} has won!`)
+    console.log(`${getActivePlayer().name} has won!`)
   }
 
   const checkForTie = () => {
-    // if tie return true. Maybe make a tie var like the winner var
+    board = Gameboard.getBoard()
+
+    // check for cells with no value, exit this function if we find any
+    for (const row of board) {
+      for (const cell of row) {
+        if (cell.getValue() === "") return
+      }
+    }
+        // if all cells have a value and there is no winner yet it's a tie
+        winner = 0
+        return true
   }
 
   const checkForWinner = () => {
@@ -129,7 +139,7 @@ const GameController = (() => {
       if (cellValues.every(cellValue => cellValue !== "")) {
         // if the cell values have the same value as the win condition, we have a winner
         if ( (cellValues[0] === cellValues[1]) && (cellValues[1] == cellValues[2]) ) {
-          winner = getActivePlayer().name
+          winner = 1
           return true
         }
       }
@@ -155,10 +165,12 @@ const DisplayController = (() => {
 
     boardDiv.textContent = ""
 
-    if (!GameController.getWinner()) {
-      msgDiv.textContent = `${activePlayer.name}'s turn...`
-    } else {
+    if (GameController.getWinner() === 0) {
+      msgDiv.textContent = `It's a tie!`
+    } else if (GameController.getWinner() === 1) {
       msgDiv.textContent = `${activePlayer.name} has won!`
+    } else {
+      msgDiv.textContent = `${activePlayer.name}'s turn...`
     }
 
     board.forEach((row, idx) => {
@@ -178,7 +190,7 @@ const DisplayController = (() => {
   }
 
   boardDiv.addEventListener("click", (e) => {
-    // don't do anything if we have a winner
+    // don't do anything if we have a winner or a tie
     if (GameController.getWinner()) return
 
     const selectedRow = e.target.parentElement.dataset.row
@@ -195,6 +207,4 @@ const DisplayController = (() => {
 })()
 
 
-// Do logic for detecting a tie
-// Display tie message in the frontend
 // Implement start and stop buttons
