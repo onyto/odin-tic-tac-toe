@@ -53,7 +53,7 @@ const Gameboard = (() => {
 
 const Player = (name, mark) => {
   return {
-    name, 
+    name,
     mark
   }
 }
@@ -108,21 +108,21 @@ const GameController = (() => {
         if (cell.getValue() === "") return
       }
     }
-        // if all cells have a value and there is no winner yet it's a tie
-        winner = 0
-        return true
+    // if all cells have a value and there is no winner yet it's a tie
+    winner = 0
+    return true
   }
 
   const checkForWinner = () => {
     const winConditions = [
-      [ [0, 0], [0, 1], [0, 2] ],
-      [ [1, 0], [1, 1], [1, 2] ],
-      [ [2, 0], [2, 1], [2, 2] ],
-      [ [0, 0], [1, 0], [2, 0] ],
-      [ [0, 1], [1, 1], [2, 1] ],
-      [ [0, 2], [1, 2], [2, 2] ],
-      [ [0, 0], [1, 1], [2, 2] ],
-      [ [0, 2], [1, 1], [2, 0] ],
+      [[0, 0], [0, 1], [0, 2]],
+      [[1, 0], [1, 1], [1, 2]],
+      [[2, 0], [2, 1], [2, 2]],
+      [[0, 0], [1, 0], [2, 0]],
+      [[0, 1], [1, 1], [2, 1]],
+      [[0, 2], [1, 2], [2, 2]],
+      [[0, 0], [1, 1], [2, 2]],
+      [[0, 2], [1, 1], [2, 0]],
     ]
 
     for (const winCondition of winConditions) {
@@ -138,7 +138,7 @@ const GameController = (() => {
 
       if (cellValues.every(cellValue => cellValue !== "")) {
         // if the cell values have the same value as the win condition, we have a winner
-        if ( (cellValues[0] === cellValues[1]) && (cellValues[1] == cellValues[2]) ) {
+        if ((cellValues[0] === cellValues[1]) && (cellValues[1] == cellValues[2])) {
           winner = 1
           return true
         }
