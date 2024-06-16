@@ -20,12 +20,16 @@ const Gameboard = (() => {
 
   const getCell = (row, col) => board[row][col]
 
-  for (let i = 0; i < rows; i++) {
-    board[i] = [];
-    for (let j = 0; j < cols; j++) {
-      board[i].push(Cell());
+  const initializeBoard = () => {
+    for (let i = 0; i < rows; i++) {
+      board[i] = [];
+      for (let j = 0; j < cols; j++) {
+        board[i].push(Cell());
+      }
     }
   }
+
+  const resetBoard = () => initializeBoard()
 
   const getBoard = () => board
 
@@ -43,11 +47,14 @@ const Gameboard = (() => {
     return false
   }
 
+  initializeBoard()
+
   return {
     getBoard,
     printBoard,
     addMark,
     getCell,
+    resetBoard,
   }
 })()
 
@@ -146,18 +153,28 @@ const GameController = (() => {
     }
   }
 
+  const resetGame = () => {
+    Gameboard.resetBoard()
+    activePlayer = p1
+    winner = 0
+    printNewRound()
+  }
+
   printNewRound()
 
   return {
     getActivePlayer,
     playRound,
     getWinner,
+    resetGame,
   }
 })()
 
 const DisplayController = (() => {
   const boardDiv = document.querySelector(".board")
   const msgDiv = document.querySelector(".msg")
+  const startButton = document.querySelector(".startButton")
+  const resetButton = document.querySelector(".resetButton")
 
   const updateDisplay = () => {
     const board = Gameboard.getBoard()
@@ -202,9 +219,13 @@ const DisplayController = (() => {
     updateDisplay()
   });
 
-  updateDisplay()
+  startButton.addEventListener("click", () => {
+    updateDisplay()
+  })
+
+  resetButton.addEventListener("click", () => {
+    GameController.resetGame()
+    updateDisplay()
+  })
 
 })()
-
-
-// Implement start and stop buttons
