@@ -206,6 +206,11 @@ const DisplayController = (() => {
     })
   }
 
+  const resetDisplay = () => {
+    boardDiv.textContent = ""
+    msgDiv.textContent = ""
+  }
+
   boardDiv.addEventListener("click", (e) => {
     // don't do anything if we have a winner or a tie
     if (GameController.getWinner()) return
@@ -225,7 +230,7 @@ const DisplayController = (() => {
 
   resetButton.addEventListener("click", () => {
     GameController.resetGame()
-    updateDisplay()
+    resetDisplay()
   })
 
 })()
