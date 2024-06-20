@@ -156,7 +156,7 @@ const GameController = (() => {
   const resetGame = () => {
     Gameboard.resetBoard()
     activePlayer = p1
-    winner = 0
+    winner = undefined
     printNewRound()
   }
 
