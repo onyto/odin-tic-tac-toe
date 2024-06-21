@@ -164,10 +164,8 @@ const GameController = (() => {
     winner = undefined
     p1.name = "p1"
     p2.name = "p2"
-    printNewRound()
   }
 
-  printNewRound()
 
   return {
     getActivePlayer,
