@@ -66,11 +66,8 @@ const Player = (name, mark) => {
 }
 
 const GameController = (() => {
-  const p1 = Player("p1")
-  p1.mark = "X"
-
-  const p2 = Player("p2")
-  p2.mark = "O"
+  const p1 = Player("p1", "X")
+  const p2 = Player("p2", "O")
 
   let activePlayer = p1
 
@@ -78,6 +75,14 @@ const GameController = (() => {
 
   const switchPlayerTurn = () => {
     activePlayer = activePlayer === p1 ? p2 : p1;
+  }
+
+  const setNameP1 = name => {
+    p1.name = name
+  }
+
+  const setNameP2 = name => {
+    p2.name = name
   }
 
   const printNewRound = () => {
@@ -157,6 +162,8 @@ const GameController = (() => {
     Gameboard.resetBoard()
     activePlayer = p1
     winner = undefined
+    p1.name = "p1"
+    p2.name = "p2"
     printNewRound()
   }
 
@@ -167,6 +174,8 @@ const GameController = (() => {
     playRound,
     getWinner,
     resetGame,
+    setNameP1,
+    setNameP2,
   }
 })()
 
@@ -175,6 +184,8 @@ const DisplayController = (() => {
   const msgDiv = document.querySelector(".msg")
   const startButton = document.querySelector(".startButton")
   const resetButton = document.querySelector(".resetButton")
+  const p1 = document.getElementById("p1")
+  const p2 = document.getElementById("p2")
 
   const updateDisplay = () => {
     const board = Gameboard.getBoard()
@@ -209,6 +220,19 @@ const DisplayController = (() => {
   const resetDisplay = () => {
     boardDiv.textContent = ""
     msgDiv.textContent = ""
+    p1.value = ""
+    p2.value = ""
+  }
+
+  const setPlayerNames = () => {
+
+    if (p1.value !== "") {
+      GameController.setNameP1(p1.value)
+    }
+
+    if (p2.value !== "") {
+      GameController.setNameP2(p2.value)
+    }
   }
 
   boardDiv.addEventListener("click", (e) => {
@@ -225,6 +249,7 @@ const DisplayController = (() => {
   });
 
   startButton.addEventListener("click", () => {
+    setPlayerNames()
     updateDisplay()
   })
 
